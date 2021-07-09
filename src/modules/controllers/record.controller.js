@@ -7,7 +7,18 @@ module.exports.getAllRecords = async (req, res) => {
 };
 
 module.exports.createNewRecord = (req, res) => {
-
+  const record = new Record({
+    name: req.body.name,
+    doctor: req.body.doctor,
+    date: req.body.date,
+    complaint: req.body.complaint,
+    userId: req.user._id
+  });
+  record.save().then(result => {
+    Record.find({userId: req.user._id}).then(result => {
+      res.send({data: result});
+    });
+  });
 };
 
 module.exports.editRecord = (req, res) => {
