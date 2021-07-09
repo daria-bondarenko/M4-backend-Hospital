@@ -51,5 +51,9 @@ module.exports.editRecord = (req, res) => {
 };
 
 module.exports.deleteRecord = (req, res) => {
-
+  Record.deleteOne({_id: req.query._id}).then(result => {
+    Record.find({userId: req.user._id}).then(result => {
+      res.send({data: result});
+    })
+  })
 };
